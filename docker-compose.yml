@@ -1,0 +1,9 @@
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80" # Открываем порт 80 для доступа к сайту
+    volumes:
+      - ./www:/usr/share/nginx/html:ro # Монтируем папку с HTML-файлами
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro # Монтируем конфиг Nginx
+    restart: always
