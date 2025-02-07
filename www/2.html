@@ -20,6 +20,9 @@
 	  -moz-user-select: none; /* Firefox */
 	  -ms-user-select: none; /* IE10+/Edge */
 	  user-select: none; /* Standard */
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent; /* Отключаем синее выделение на мобильных */
+
     }
 
     /* Полноэкранный canvas для фона с градиентом */
@@ -30,7 +33,6 @@
       width: 100%;
       height: 100%;
       z-index: -2;
-      background: linear-gradient(135deg, #ff334d, #e92d74, #d3279b, #bd20c2, #a71ae8);
     }
     /* Навбар */
     .navbar {
@@ -53,7 +55,8 @@
     .navbar ul {
       list-style: none;
       display: flex;
-      gap: 25px;
+      gap: 1vw;
+      white-space: nowrap;
     }
     .navbar ul li a {
       color: #fff;
@@ -134,6 +137,22 @@
 
     .social-icon:hover i {
       transform: scale(1.2);
+    }
+    @media (max-width: 768px) {
+      .social-icon {
+        transform: none !important; /* Отключаем поднятие */
+        -webkit-tap-highlight-color: transparent; /* Отключаем синее выделение на мобильных */
+      }
+
+      .social-icon:active {
+        transform: scale(0.9); /* Сжимаем кнопку при нажатии */
+        background-color: rgba(255, 255, 255, 0.4); /* Изменяем цвет фона */
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Уменьшаем тень */
+      }
+
+      .social-icon:active i {
+        transform: scale(1); /* Возвращаем иконку к исходному размеру */
+      }
     }
   </style>
 </head>
@@ -305,7 +324,9 @@
     addEventListener("pointermove", (e) => {
       spiders.forEach(spider => spider.follow(e.clientX, e.clientY));
     });
-
+    addEventListener("pointerdown", (e) => {
+      spiders.forEach(spider => spider.follow(e.clientX, e.clientY));
+    });
     requestAnimationFrame(function anim(t) {
       if (w !== innerWidth) {
         w = canvas.width = innerWidth;

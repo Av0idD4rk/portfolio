@@ -15,6 +15,12 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+	  overflow: hidden;
+      -webkit-user-select: none; /* Safari */
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* IE10+/Edge */
+      user-select: none; /* Standard */
+      -webkit-tap-highlight-color: transparent; /* Отключаем синее выделение на мобильных */
     }
     /* Полноэкранный canvas для фона с градиентом */
     #canvas {
@@ -41,14 +47,16 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       transition: background 0.3s ease;
       border: 1px solid rgba(255, 255, 255, 0.5);
+
     }
     .navbar:hover {
       background: rgba(215, 205, 254, 0.6);
     }
     .navbar ul {
-      list-style: none;
-      display: flex;
-      gap: 25px;
+	list-style: none;
+	display: flex;
+	gap: 1vw;
+	white-space: nowrap;
     }
     .navbar ul li a {
       color: #fff;
@@ -57,8 +65,9 @@
       font-weight: bold;
       text-decoration: none;
       padding: 8px 12px;
-      border-radius: 10px;
       transition: all 0.3s ease;
+	  max-height: 20px;
+
     }
     .navbar ul li a:hover {
       color: #ffdd57;
@@ -67,6 +76,7 @@
     /* Стили для хедера */
     header {
       height: 100vh;
+
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -75,24 +85,25 @@
       padding: 0 20px;
       position: relative;
       z-index: 1;
-      -webkit-user-select: none; /* Safari */        
-	  -moz-user-select: none; /* Firefox */
-	  -ms-user-select: none; /* IE10+/Edge */
-	  user-select: none; /* Standard */
     }
+	
 header h1 {
-  font-size: 150pt;
+  font-size: 13vw;
+  display: flex; /* Используем Flexbox */
+  align-items: flex-end; /* Выравниваем текст по нижней части */
   margin-bottom: 0.2em;
   font-weight: 700;
   font-family: "Monomaniac One", sans-serif;
   color: rgba(255, 255, 255, 0.85);
   position: relative;
+
 }
 
 .cursor {
   display: inline-block;
   margin-left: 4px; /* Отступ от текста */
   animation: blink 0.8s infinite; /* Анимация моргания */
+  vertical-align: bottom; /* Выравниваем курсор по нижней части */
 }
 
 @keyframes blink {
@@ -104,20 +115,12 @@ header h1 {
       color: #fff;
     }
 
-    /* Пример дополнительных секций */
-    section {
-      padding: 60px 20px;
+    @media (max-width: 768px) {
+      header h1{
+          font-size: 20vw;
+      }
     }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .section-title {
-      text-align: center;
-      margin-bottom: 40px;
-      font-size: 2.5em;
-      color: #fff;
-    }
+
 
   </style>
 </head>
@@ -270,7 +273,9 @@ header h1 {
         spider.follow(e.clientX, e.clientY);
       });
     });
-    
+    addEventListener("pointerdown", (e) => {
+      spiders.forEach(spider => spider.follow(e.clientX, e.clientY));
+    });
     requestAnimationFrame(function anim(t) {
       if (w !== innerWidth) {
         w = canvas.width = innerWidth;
@@ -285,13 +290,6 @@ header h1 {
 		grad.addColorStop(0.5, "#d3279b");
 		grad.addColorStop(0.75, "#bd20c2");
 		grad.addColorStop(1, "#a71ae8");
-	  /*
-		grad.addColorStop(0, "#cac7ff");
-		grad.addColorStop(0.25, "#d7cdfe");
-		grad.addColorStop(0.5, "#e4d3fc");
-		grad.addColorStop(0.75, "#f1dafb");
-		grad.addColorStop(1, "#fee0f9");
-		*/
       ctx.fillStyle = grad;
       drawCircle(0, 0, w * 10);
       ctx.fillStyle = ctx.strokeStyle = "#fff";

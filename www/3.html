@@ -20,6 +20,8 @@
 	  -moz-user-select: none; /* Firefox */
 	  -ms-user-select: none; /* IE10+/Edge */
 	  user-select: none; /* Standard */
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent; /* Отключаем синее выделение на мобильных */
     }
 
     /* Полноэкранный canvas для фона с градиентом */
@@ -30,7 +32,6 @@
       width: 100%;
       height: 100%;
       z-index: -2;
-      background: linear-gradient(135deg, #ff334d, #e92d74, #d3279b, #bd20c2, #a71ae8);
     }
 
     /* Навбар */
@@ -54,7 +55,8 @@
     .navbar ul {
       list-style: none;
       display: flex;
-      gap: 25px;
+      gap: 1vw;
+      white-space: nowrap;
     }
     .navbar ul li a {
       color: #fff;
@@ -180,6 +182,11 @@
 	  font-family: "Satisfy", sans-serif;
 	  font-size: 0.9em;
 	}
+    @media (max-width: 768px) {
+      .icon-group {
+        display: none; /* Скрываем иконки */
+      }
+    }
   </style>
 </head>
 <body>
@@ -399,7 +406,9 @@
     addEventListener("pointermove", (e) => {
       spiders.forEach(spider => spider.follow(e.clientX, e.clientY));
     });
-
+    addEventListener("pointerdown", (e) => {
+      spiders.forEach(spider => spider.follow(e.clientX, e.clientY));
+    });
     requestAnimationFrame(function anim(t) {
       if (w !== innerWidth) {
         w = canvas.width = innerWidth;
