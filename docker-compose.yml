@@ -2,7 +2,7 @@ services:
   nginx:
     image: nginx:alpine
     ports:
-      - "80:80" # Открываем порт 80 для доступа к сайту
+      - "443:443" # Открываем порт 80 для доступа к сайту
     volumes:
       - /etc/nginx/certs:/etc/nginx/certs
       - ./www:/usr/share/nginx/html:ro #
